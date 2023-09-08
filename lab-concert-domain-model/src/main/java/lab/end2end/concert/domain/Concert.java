@@ -6,8 +6,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lab.end2end.concert.jackson.LocalDateTimeDeserializer;
 import lab.end2end.concert.jackson.LocalDateTimeSerializer;
 
-
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -15,16 +13,20 @@ import java.time.LocalDateTime;
  * Class to represent a Concert. A Concert is characterised by an unique ID,
  * title, date and time, and a featuring Performer.
  */
-//TODO: add annotation for entity
+// TODO: add annotation for entity
+@Entity
 public class Concert {
-	
-	//TODO: add annotation for id
+
+    // TODO: add annotation for id
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
 
     private LocalDateTime date;
 
-  //TODO: add annotation for relationship
+    // TODO: add annotation for relationship
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Performer performer;
 
     public Concert(Long id, String title, LocalDateTime date, Performer performer) {
@@ -41,8 +43,7 @@ public class Concert {
     public Concert() {
     }
 
-    
-    public Concert( Performer performer) {
+    public Concert(Performer performer) {
         this.performer = performer;
     }
 
@@ -61,7 +62,10 @@ public class Concert {
     public void setTitle(String title) {
         this.title = title;
     }
-    //TODO: add the JSONSerialze and JsonDeserialize
+
+    // TODO: add the JSONSerialze and JsonDeserialize
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     public LocalDateTime getDate() {
         return date;
     }

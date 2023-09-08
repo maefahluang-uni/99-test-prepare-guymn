@@ -1,6 +1,5 @@
 package lab.end2end.concert.domain;
 
-
 import javax.persistence.*;
 
 /**
@@ -8,13 +7,16 @@ import javax.persistence.*;
  * Performer object has an ID (a database primary key value), a name, the name
  * of an image file, and a genre.
  */
+@Entity
 public class Performer {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String imageUri;
 
-    public Performer() { }
+    public Performer() {
+    }
 
     public Performer(Long id, String name, String imageUri) {
         this.id = id;
