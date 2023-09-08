@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create and List Concerts</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Create Concert</h1>
+    <form id="createConcertForm">
+        <h3>New Concert</h3>
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required><br><br>
+        <!-- add more fields in this form -->
+        
+        <button type="submit">Create Concert</button>
+    </form>
+    
+    <hr>
+    
+    <h1>List Concerts</h1>
+    <button id="reloadButton">Reload</button>
+    <div id="concertList"></div>
+    
+    <script>
+        $(document).ready(function() {
+            // Load concerts on 
+            function loadConcerts(){
+                $('#concertList').html(''); // Clear concert list
+                $.ajax({
+                    type: '', //TODO: add type
+                    url: '', //TODO: add url
+                    success: function(response) {
+                        console.log('Concerts:', response);
+                        response.forEach(function(concert) {
+                            //TODO: add concert details to concertList
+                        });
+                    },
+                    error: function(error) {
+                        console.error('Error loading concerts:', error);
+                    }
+                });
+            }
+
+            // Load concerts on page load
+            loadConcerts();
+            
+            // Reload button click event
+            $('#reloadButton').click(function() {
+                loadConcerts();
+            });
+
+            // Handle form submission
+            $('#createConcertForm').submit(function(event) {
+                event.preventDefault(); // Prevent default form submission
+                
+                // Prepare concert data as JSON
+                var concertData = {
+                    title: $('#title').val(),
+                    //TODO: add more fields and performer
+                };
+                
+                //TODO: Send POST request to create concert
+                $.ajax({
+                    type: '', //TODO: add type
+                    url: '', //TODO: add url
+                    data: JSON.stringify(concertData),
+                    contentType: 'application/json',
+                    success: function(response) {
+                        console.log('Concert created successfully:', response);
+                        //TODO: reload concert list
+                    },
+                    error: function(error) {
+                        console.error('Error creating concert:', error);
+                    }
+                });
+                
+                // Reset form fields
+                $('#title').val('');
+                $('#dateTime').val('');
+                $('#performer-name').val('');
+                $('#performer-imageUri').val('');
+            }); //end submit function
+        });
+    </script>
+</body>
+</html>
